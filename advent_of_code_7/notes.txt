@@ -1,0 +1,50 @@
+﻿I need to create steps, with requirements consisting of a list of steps.
+Then I need to check which step with the lowest alphabetical letter is ready to begin.
+
+If I add all steps that are ready to begin in a list, and sort that alphabetically by the StepId.
+I can then loop to go through with the first step in that list, update the list with all available steps, sort it again.
+
+Step:
+char StepId, bool Available, bool Completed List<Step> Requirements
+
+I need functions to: 
+Create steps based on the input().
+
+Looping through available steps
+While (AvailableSteps.Count > 0) {
+	AvailableSteps.OrderBy(x => x.StepId);
+	Step currentStep = new Step(AvailableSteps.First());
+	currentStep.Completed = true;
+	AddStepToCompletedList(currentStep.StepId);
+	Foreach (Step s in UnavailableSteps) {
+		step.CheckAvailability(currentStep);
+	}
+
+}
+
+Console.WriteLine(StepsCompletedOrder);
+
+Need to loop through all steps, and check which of the steps have the current step as a requirement.
+	//Add that step to the list of available steps.
+	
+Public void CheckAvailability(Step completedStep) {
+	foreach (Step reqStep in this.Requirements) {
+		if (regStep == completedStep) {
+			Program:UpdateAvailableSteps(this);
+			Program:UpdateUnavailableSteps(this);
+		}
+	}
+}
+//Update the list with available steps.
+void UpdateAvailableSteps(Step step) {
+	AvailableSteps.Add(step);
+}
+
+//Update the list with available steps.
+void UpdateUnavailableSteps(Step step) {
+	AvailableSteps.Remove(step);
+}
+
+AddStepToCompletedList() {
+	Add the steps letter to the completed string.
+}
