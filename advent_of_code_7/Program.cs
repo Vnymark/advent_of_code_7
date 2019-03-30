@@ -6,7 +6,7 @@ namespace advent_of_code_7
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var inputPath = @"../../../input.txt";
         }
     }
 }
