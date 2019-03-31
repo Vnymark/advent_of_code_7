@@ -25,20 +25,77 @@ namespace advent_of_code_7
             {
                 AddRequirement(row);
             }
-            
+            AllSteps.Sort((x, y) => string.Compare(x.Id, y.Id));
+            int i = 1;
+            foreach (Step step in AllSteps)
+            {
+                step.Time = 60 +i;
+                i++;
+            }
+
             GetAvailableSteps();
-            while (AvailableSteps.Count > 0)
+            
+            //Part 1
+            /*while (AvailableSteps.Count > 0)
             {
                 AvailableSteps.Sort((x, y) => string.Compare(x.Id, y.Id));
                 Step step = AvailableSteps.First();
-                step.Completed = true;
                 UnavailableSteps.Remove(step);
                 AddLetterOrder(step.Id);
                 AvailableSteps.RemoveAt(0);
                 UpdateAvailableSteps(step);
 
-            }
+            }*/
 
+            //Part 2
+
+            List<Worker> WorkerList = new List<Worker>();
+            AddWorkers();
+            List<Worker> AvailableWorkers = new List<Worker>(WorkerList);
+            List<Step> CompletedSteps = new List<Step>();
+            int seconds = 0;
+            while (CompletedSteps.Count() < AllSteps.Count())
+            {
+                
+                Console.Write(seconds);
+                
+                foreach (Worker worker in WorkerList)
+                {
+                    
+                    if (worker.StepTime == 0)
+                    {
+                        if (worker.Step != null)
+                        {
+                            
+                            AddLetterOrder(worker.Step.Id);
+                            UpdateAvailableSteps(worker.Step);
+                            CompletedSteps.Add(worker.Step);
+                            worker.Step = null;
+                        }
+                        if(AvailableSteps.Count != 0)
+                        {
+                            AvailableSteps.Sort((x, y) => string.Compare(x.Id, y.Id));
+                            Step step = AvailableSteps.First();
+                            UnavailableSteps.Remove(step);
+                            worker.Step = step;
+                            worker.StepTime = step.Time - 1;
+                            AvailableSteps.RemoveAt(0);
+                            Console.Write(worker.Step.Id);
+                        }
+                    }
+                    else
+                    {
+                        Console.Write(worker.Step.Id);
+                        worker.StepTime --;
+                        
+                    }
+                }
+                WorkerList.OrderBy(x => x.StepTime);
+                seconds++;
+                Console.WriteLine("");
+                
+            }
+            Console.WriteLine(seconds);
             Console.WriteLine(stepLetterOrder);
             Console.ReadKey();
 
@@ -117,6 +174,15 @@ namespace advent_of_code_7
             void AddLetterOrder(string stepId)
             {
                 stepLetterOrder += stepId;
+            }
+
+            void AddWorkers()
+            {
+                while (WorkerList.Count() < 5)
+                {
+                    Worker worker = new Worker();
+                    WorkerList.Add(worker);
+                }
             }
         }
     }

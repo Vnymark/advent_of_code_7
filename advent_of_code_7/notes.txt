@@ -19,7 +19,6 @@ While (AvailableSteps.Count > 0) {
 	Foreach (Step s in UnavailableSteps) {
 		step.CheckAvailability(currentStep);
 	}
-
 }
 
 Console.WriteLine(StepsCompletedOrder);
@@ -48,3 +47,19 @@ void UpdateUnavailableSteps(Step step) {
 AddStepToCompletedList() {
 	Add the steps letter to the completed string.
 }
+
+
+Part 2:
+Maybe I can create a Worker Class.
+Worker:
+int Id, int StepTime.
+
+I can then create 5 workers, and loop through available steps.
+Adding the steps to workers, if workers are available.
+So I will probably need a List<Worker> AvailableWorkers.
+
+While looping through the steps, I subtract one second from each of the workers.
+When the worker gets to zero the worker will become available again and assume work on the next available step in alphabetical order.
+Each loop iteration I add to a counter for seconds (i++).
+In the end I print the variable "i".
+
