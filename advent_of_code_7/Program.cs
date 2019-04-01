@@ -36,7 +36,8 @@ namespace advent_of_code_7
             GetAvailableSteps();
             
             //Part 1
-            /*while (AvailableSteps.Count > 0)
+            /*
+            while (AvailableSteps.Count > 0)
             {
                 AvailableSteps.Sort((x, y) => string.Compare(x.Id, y.Id));
                 Step step = AvailableSteps.First();
@@ -44,11 +45,11 @@ namespace advent_of_code_7
                 AddLetterOrder(step.Id);
                 AvailableSteps.RemoveAt(0);
                 UpdateAvailableSteps(step);
-
-            }*/
+            }
+            Console.WriteLine(stepLetterOrder);
+            */
 
             //Part 2
-
             List<Worker> WorkerList = new List<Worker>();
             AddWorkers();
             List<Worker> AvailableWorkers = new List<Worker>(WorkerList);
@@ -56,9 +57,6 @@ namespace advent_of_code_7
             int seconds = 0;
             while (CompletedSteps.Count() < AllSteps.Count())
             {
-                
-                Console.Write(seconds);
-                
                 foreach (Worker worker in WorkerList)
                 {
                     
@@ -66,7 +64,6 @@ namespace advent_of_code_7
                     {
                         if (worker.Step != null)
                         {
-                            
                             AddLetterOrder(worker.Step.Id);
                             UpdateAvailableSteps(worker.Step);
                             CompletedSteps.Add(worker.Step);
@@ -80,24 +77,23 @@ namespace advent_of_code_7
                             worker.Step = step;
                             worker.StepTime = step.Time - 1;
                             AvailableSteps.RemoveAt(0);
-                            Console.Write(worker.Step.Id);
                         }
                     }
                     else
                     {
-                        Console.Write(worker.Step.Id);
                         worker.StepTime --;
-                        
                     }
                 }
-                WorkerList.OrderBy(x => x.StepTime);
+                //To make sure that the free workers always comes after the busy ones, so no second goes lost.
+                WorkerList = WorkerList.OrderByDescending(x => x.StepTime).ToList();
                 seconds++;
-                Console.WriteLine("");
                 
             }
-            Console.WriteLine(seconds);
-            Console.WriteLine(stepLetterOrder);
+            //The last second is added after the work is completed, and therefore removed.
+            Console.WriteLine("Seconds it took to assemble to sleigh with five workers: {0}", seconds-1);
+            Console.WriteLine("Order the steps were completed with five workers: {0}", stepLetterOrder);
             Console.ReadKey();
+
 
             //Go through the row adding both steps if they are missing from the AllSteps list.
             void AddStep(string row) {
